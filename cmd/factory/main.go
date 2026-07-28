@@ -10,10 +10,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/brillio/nightshift/internal/agents"
-	gh "github.com/brillio/nightshift/internal/github"
-	"github.com/brillio/nightshift/internal/pipeline"
-	"github.com/brillio/nightshift/internal/state"
+	"github.com/germanangut/followthesun/internal/agents"
+	gh "github.com/germanangut/followthesun/internal/github"
+	"github.com/germanangut/followthesun/internal/pipeline"
+	"github.com/germanangut/followthesun/internal/state"
 	"github.com/google/uuid"
 	"github.com/spf13/cobra"
 )
@@ -29,7 +29,7 @@ var (
 func main() {
 	root := &cobra.Command{
 		Use:   "factory",
-		Short: "Nightshift — AI agent assembly line orchestrator",
+		Short: "Follow The Sun — AI agent assembly line orchestrator",
 	}
 
 	run := &cobra.Command{
@@ -175,7 +175,7 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 		if err != nil {
 			return fmt.Errorf("cannot resume: %w", err)
 		}
-		fmt.Printf("[nightshift] Resuming from stage: %s\n", s.Stage)
+		fmt.Printf("[followthesun] Resuming from stage: %s\n", s.Stage)
 	} else {
 		startStage := state.StageDevOpsTriage
 
@@ -208,16 +208,16 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 					Issues: []state.Issue{synthetic},
 				}}
 				s.Stage = state.StageTechLeadPlan
-				fmt.Println("\n[nightshift] Skipping GitHub — starting pipeline at tech-lead-plan...")
+				fmt.Println("\n[followthesun] Skipping GitHub — starting pipeline at tech-lead-plan...")
 			} else {
-				fmt.Println("\n[nightshift] Issue filed — starting pipeline...")
+				fmt.Println("\n[followthesun] Issue filed — starting pipeline...")
 			}
 		}
 
 		if err := s.Save(flagStateFile); err != nil {
 			return err
 		}
-		fmt.Printf("[nightshift] Starting new run: %s\n", s.RunID)
+		fmt.Printf("[followthesun] Starting new run: %s\n", s.RunID)
 	}
 
 	runner := &pipeline.Runner{
@@ -228,13 +228,13 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 
 	for s.Stage != state.StageDone {
 		if err := runner.RunStage(s.Stage); err != nil {
-			fmt.Fprintf(os.Stderr, "[nightshift] Stage %s failed: %v\n", s.Stage, err)
+			fmt.Fprintf(os.Stderr, "[followthesun] Stage %s failed: %v\n", s.Stage, err)
 			fmt.Fprintf(os.Stderr, "State saved to %s — fix and re-run with --resume\n", flagStateFile)
 			os.Exit(1)
 		}
 	}
 
-	fmt.Printf("\n[nightshift] Pipeline complete. Run ID: %s\n", s.RunID)
+	fmt.Printf("\n[followthesun] Pipeline complete. Run ID: %s\n", s.RunID)
 	return nil
 }
 

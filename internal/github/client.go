@@ -22,7 +22,7 @@ func ListOpenIssues(repo string) ([]map[string]any, error) {
 }
 
 func CreateIssue(repo, title, body, issueType, priority string) (int, error) {
-	labels := fmt.Sprintf("type:%s,priority:%s,nightshift", issueType, priority)
+	labels := fmt.Sprintf("type:%s,priority:%s,followthesun", issueType, priority)
 	out, err := gh("issue", "create",
 		"--repo", repo,
 		"--title", title,
