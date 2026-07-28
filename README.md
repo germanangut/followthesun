@@ -1,4 +1,4 @@
-# Nightshift
+# Follow The Sun
 
 > A deterministic Go binary that orchestrates an AI agent assembly line — 50–100 agents running simultaneously, ~20 projects in parallel, 0 lines hand-coded, 1 human in the loop.
 
