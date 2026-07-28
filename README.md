@@ -375,7 +375,3 @@ your-project/
 **PR has merge conflicts the agent can't resolve** — the `pr-manager` agent will set `needs_human: true` in state and stop. Resolve manually, push, then `--resume`.
 
 ---
-
-## Questions
-
-Reach out in `#nightshift` or open an issue against this repo.
