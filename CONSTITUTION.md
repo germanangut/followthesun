@@ -1,6 +1,6 @@
 # Nightshift — Engineering Constitution
 
-This constitution defines the non-negotiable rules for all work performed by humans or agents in any project running the Nightshift pipeline. It applies to application code, infrastructure, data work, documentation, and automation.
+This constitution defines the non-negotiable rules for all work performed by humans or agents in any project running the Nightshift pipeline. It applies to application code, infrastructure, data workflows, and documentation unless explicitly superseded by a more specific spec approved by a human.
 
 Agents may suggest improvements to this document, but may not silently change it as part of unrelated work. Governance changes require human review.
 
@@ -33,7 +33,7 @@ A spec or issue must include at minimum:
 - Error handling or failure expectations.
 - Test or verification expectations.
 
-If any required section is missing, the Issue Intake agent asks targeted questions and stops. If the Spec Edge Case agent finds untestable acceptance criteria, it blocks implementation and files a question on the issue.
+If any required section is missing, the Issue Intake agent asks targeted questions and stops. If the Spec Edge Case agent finds untestable acceptance criteria, it blocks implementation and files a follow-up issue for clarification.
 
 ---
 

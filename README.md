@@ -2,7 +2,7 @@
 
 > A deterministic Go binary that orchestrates an AI agent assembly line — 50–100 agents running simultaneously, ~20 projects in parallel, 0 lines hand-coded, 1 human in the loop.
 
-The name comes from how it runs: you approve a plan, then the pipeline works through the night — writing tests, implementing, reviewing, opening PRs — and hands you finished work in the morning. One human checkpoint. Everything else unattended.
+The name comes from how it runs: you approve a plan, then the pipeline works through the night — writing tests, implementing, reviewing, opening PRs — and hands you finished work in the morning.
 
 ---
 
@@ -56,7 +56,7 @@ Read `CONSTITUTION.md` for the non-negotiable rules governing all agents and hum
 **macOS**
 
 ```bash
-cd nightshift
+cd followthesun
 make install        # builds factory → /usr/local/bin/factory
 
 factory --help      # verify
@@ -67,12 +67,12 @@ factory --help      # verify
 There's no `make` by default on Windows, so build with `go build` directly and put the binary on your `PATH` yourself:
 
 ```powershell
-cd nightshift
+cd followthesun
 go build -o bin\factory.exe .\cmd\factory
 
-New-Item -ItemType Directory -Force "$env:LOCALAPPDATA\nightshift" | Out-Null
-Copy-Item bin\factory.exe "$env:LOCALAPPDATA\nightshift\factory.exe" -Force
-[Environment]::SetEnvironmentVariable("Path", "$env:Path;$env:LOCALAPPDATA\nightshift", "User")
+New-Item -ItemType Directory -Force "$env:LOCALAPPDATA\followthesun" | Out-Null
+Copy-Item bin\factory.exe "$env:LOCALAPPDATA\followthesun\factory.exe" -Force
+[Environment]::SetEnvironmentVariable("Path", "$env:Path;$env:LOCALAPPDATA\followthesun", "User")
 
 # open a new PowerShell window, then:
 factory --help      # verify
@@ -80,7 +80,7 @@ factory --help      # verify
 
 ### Enable Headroom (token compression)
 
-The factory runs 50–100 agents simultaneously. Headroom compresses all LLM traffic — tool outputs, file reads, search results — before it reaches the model. In practice this cuts 60–90% of tokens on the high-volume stages (triage, validation, judgment panel).
+The factory runs 50–100 agents simultaneously. Headroom compresses all LLM traffic — tool outputs, file reads, search results — before it reaches the model. In practice this cuts 60–90% of the token volume on large runs.
 
 **1. Register the MCP server** (one-time, user-scoped):
 
@@ -159,7 +159,7 @@ headroom dashboard   # live per-stage compression stats (proxy must be running)
 headroom perf        # summary after a run
 ```
 
-> **Without the proxy:** the Headroom MCP server (`headroom_compress`, `headroom_retrieve`, `headroom_stats`) is still available to agents on demand — you get compression when agents explicitly call it, just not automatic compression of all traffic.
+> **Without the proxy:** the Headroom MCP server (`headroom_compress`, `headroom_retrieve`, `headroom_stats`) is still available to agents on demand — you get compression when agents explicitly request it, even if the proxy is not running.
 
 ### Add skills to your project
 
@@ -169,7 +169,7 @@ macOS:
 
 ```bash
 cd /your/project
-cp -r ~/Projects/nightshift/.claude/commands/ .claude/commands/
+cp -r ~/Projects/followthesun/.claude/commands/ .claude/commands/
 
 # Add to .gitignore
 echo "factory-state.json" >> .gitignore
@@ -179,7 +179,7 @@ Windows (PowerShell):
 
 ```powershell
 cd C:\your\project
-Copy-Item -Recurse "$HOME\Projects\nightshift\.claude\commands" .claude\commands
+Copy-Item -Recurse "$HOME\Projects\followthesun\.claude\commands" .claude\commands
 
 # Add to .gitignore
 Add-Content .gitignore "factory-state.json"
@@ -205,7 +205,7 @@ Pulls all open issues, groups them into non-conflicting batches, writes a plan, 
 factory run --repo your-org/your-repo --project . --describe
 ```
 
-Prompts you to describe what you want built in plain language. The intake agent rewrites it into a structured GitHub issue with measurable acceptance criteria, shows you a preview, asks for confirmation, files it, then immediately starts the pipeline.
+Prompts you to describe what you want built in plain language. The intake agent rewrites it into a structured GitHub issue with measurable acceptance criteria, shows you a preview, asks for confirmation, then starts the pipeline.
 
 If the acceptance criteria aren't specific enough (e.g. "make it faster"), the intake agent blocks filing and tells you exactly what to sharpen. Fix the description and re-run.
 
@@ -220,13 +220,13 @@ Also copy the constitution to your project if you haven't already:
 macOS:
 
 ```bash
-cp ~/Projects/nightshift/CONSTITUTION.md .
+cp ~/Projects/followthesun/CONSTITUTION.md .
 ```
 
 Windows (PowerShell):
 
 ```powershell
-Copy-Item "$HOME\Projects\nightshift\CONSTITUTION.md" .
+Copy-Item "$HOME\Projects\followthesun\CONSTITUTION.md" .
 ```
 
 ### Resume after a failure
@@ -309,7 +309,7 @@ After every merge, 5 panels review the changes:
 ## Engineering discipline
 
 ### Spec-first, constitution-governed
-All work traces to a GitHub Issue with measurable acceptance criteria. The `CONSTITUTION.md` defines the rules no agent or human can override. The Spec Edge Case agent hardens every plan before a human approves it — catching ambiguity that would otherwise become bugs.
+All work traces to a GitHub Issue with measurable acceptance criteria. The `CONSTITUTION.md` defines the rules no agent or human can override. The Spec Edge Case agent hardens every plan before a human checkpoint.
 
 ### Plan-driven + agentic
 The Tech Lead writes a plan. The Spec Edge Case agent challenges it. A human approves it. Only then do agents build — at scale, in parallel. Agents expand on the plan but cannot contradict it.
@@ -356,9 +356,9 @@ your-project/
 
 ## Troubleshooting
 
-**`connection refused` on port 8787** — the Headroom proxy isn't running. Start it with `headroom proxy --port 8787` in a separate terminal, or bypass it: macOS `unset ANTHROPIC_BASE_URL`, Windows (PowerShell) `Remove-Item Env:\ANTHROPIC_BASE_URL`.
+**`connection refused` on port 8787** — the Headroom proxy isn't running. Start it with `headroom proxy --port 8787` in a separate terminal, or bypass it: macOS `unset ANTHROPIC_BASE_URL`, Windows `$env:ANTHROPIC_BASE_URL = $null`.
 
-**`factory: command not found`** (macOS) — run `make install` from the nightshift repo, or ensure `/usr/local/bin` is in your `$PATH`.
+**`factory: command not found`** (macOS) — run `make install` from the followthesun repo, or ensure `/usr/local/bin` is in your `$PATH`.
 
 **`'factory' is not recognized...`** (Windows) — the folder containing `factory.exe` isn't on your `PATH`. Re-run the "Install the binary" step above, then open a new PowerShell window.
 
@@ -373,5 +373,3 @@ your-project/
 **Judgment panel generates issues every run** — expected behavior for recurring problems. Treat generated issues as P0/P1 work — they represent real gaps the panel found.
 
 **PR has merge conflicts the agent can't resolve** — the `pr-manager` agent will set `needs_human: true` in state and stop. Resolve manually, push, then `--resume`.
-
----

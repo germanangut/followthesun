@@ -1,4 +1,4 @@
-module github.com/brillio/nightshift
+module github.com/germanangut/followthesun
 
 go 1.22
 
