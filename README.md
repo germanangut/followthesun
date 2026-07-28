@@ -302,7 +302,7 @@ After every merge, 5 panels review the changes:
 | Performance Reviewer | Sonnet | N+1 queries, unbounded loops, blocking I/O |
 | Correctness Reviewer | Haiku | Logic errors, nil dereferences, unhandled errors |
 
-**Failures auto-file new GitHub issues** (labeled `nightshift-generated`) and loop back to stage 1 on the next run. No human triage needed.
+**Failures auto-file new GitHub issues** (labeled `followthesun-generated`) and loop back to stage 1 on the next run. No human triage needed.
 
 ---
 

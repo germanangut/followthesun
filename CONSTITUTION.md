@@ -1,6 +1,6 @@
-# Nightshift — Engineering Constitution
+# Follow The Sun — Engineering Constitution
 
-This constitution defines the non-negotiable rules for all work performed by humans or agents in any project running the Nightshift pipeline. It applies to application code, infrastructure, data workflows, and documentation unless explicitly superseded by a more specific spec approved by a human.
+This constitution defines the non-negotiable rules for all work performed by humans or agents in any project running the Follow The Sun pipeline. It applies to application code, infrastructure, data workflows, and documentation unless explicitly superseded by a more specific spec approved by a human.
 
 Agents may suggest improvements to this document, but may not silently change it as part of unrelated work. Governance changes require human review.
 
@@ -141,7 +141,7 @@ Recommended labels:
 - `factory:judgment` — Judgment Panel reviewing
 - `factory:complete` — loop closed
 - `factory:blocked` — human decision required
-- `nightshift-generated` — issue filed by the Judgment Panel
+- `followthesun-generated` — issue filed by the Judgment Panel
 
 ---
 

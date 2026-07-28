@@ -1,4 +1,4 @@
-# Nightshift — Engineering Discipline
+# Follow The Sun — Engineering Discipline
 
 Read `CONSTITUTION.md` before anything else. It defines the non-negotiable rules that override all other instructions.
 
